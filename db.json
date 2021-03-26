@@ -1,1 +1,11 @@
-{}
+{
+  "emails": [
+    {
+      "id": 0,
+      "time": 1616747796,
+      "from": "Denis Pupkin",
+      "subject": "Hello bro",
+      "text": "Hi! How are you?"
+    }
+  ]
+}
