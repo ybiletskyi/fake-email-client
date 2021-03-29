@@ -1,3 +1,11 @@
 <resources>
+    <!-- app resources -->
     <string name="app_name">Fake Email Client</string>
+
+    <!-- drawer resources -->
+    <string name="drawer_open">Open</string>
+    <string name="drawer_close">Closed</string>
+
+    <string name="str_inbox">Inbox</string>
+    <string name="str_trash">Trash</string>
 </resources>
