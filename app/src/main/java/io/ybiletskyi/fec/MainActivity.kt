@@ -3,11 +3,14 @@ package io.ybiletskyi.fec
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import io.ybiletskyi.fec.common.ScreenSettings
 import io.ybiletskyi.fec.drawer.DrawerHelper
+import io.ybiletskyi.fec.utils.ToolbarHelper
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var viewModel: FiltersViewModel
+    val appRouter = AppRouter(this)
 
     private val toolbarHelper by lazy {
         ToolbarHelper(this)
@@ -20,23 +23,45 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        viewModel = ViewModelProvider(this).get(FiltersViewModel::class.java)
+        // perform initialization of toolbar
         toolbarHelper
+        // init view model
+        viewModel = ViewModelProvider(this).get(FiltersViewModel::class.java)
+        // open main fragment
+        appRouter.openMainScreen()
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
         super.onPostCreate(savedInstanceState)
+        // sync drawer state
         drawerHelper.syncState()
     }
 
     override fun onBackPressed() {
-        if (!drawerHelper.handleOnBackPressed())
+        if (!drawerHelper.handleOnBackPressed() && !appRouter.onBackPressed())
             super.onBackPressed()
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
         drawerHelper.onRestoreInstanceState()
+    }
+
+    fun applyScreenSettings(screenSettings: ScreenSettings) {
+        when (screenSettings) {
+            is ScreenSettings.Default -> {
+                drawerHelper.enableDrawer = true
+                toolbarHelper.setUpHomeButton(ToolbarHelper.ButtonState.BURGER)
+            }
+            is ScreenSettings.Details -> {
+                drawerHelper.enableDrawer = false
+                toolbarHelper.setUpHomeButton(ToolbarHelper.ButtonState.BACK_BUTTON)
+            }
+        }
     }
 }

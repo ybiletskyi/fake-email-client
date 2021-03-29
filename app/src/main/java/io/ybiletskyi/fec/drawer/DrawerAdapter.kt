@@ -5,7 +5,7 @@ import androidx.recyclerview.widget.RecyclerView
 import io.ybiletskyi.fec.R
 import io.ybiletskyi.fec.drawer.holders.DrawerHeaderViewHolder
 import io.ybiletskyi.fec.drawer.holders.DrawerItemViewHolder
-import io.ybiletskyi.fec.inflate
+import io.ybiletskyi.fec.common.inflate
 
 class DrawerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 

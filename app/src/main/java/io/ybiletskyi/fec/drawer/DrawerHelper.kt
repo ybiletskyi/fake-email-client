@@ -14,6 +14,18 @@ class DrawerHelper(
     private val viewModel: FiltersViewModel
 ) {
 
+    var enableDrawer: Boolean
+        get() = drawerToggle.isDrawerIndicatorEnabled
+        set(value) {
+            drawerToggle.isDrawerIndicatorEnabled = value
+
+            if (value) {
+                drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
+            } else {
+                drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+            }
+        }
+
     private val drawerToggle: ActionBarDrawerToggle
     private val drawerLayout: DrawerLayout
     private val recyclerView: RecyclerView
@@ -30,7 +42,7 @@ class DrawerHelper(
 
         drawerLayout = ownerActivity.findViewById(R.id.drawer_layout)
         drawerToggle = ActionBarDrawerToggle(ownerActivity, drawerLayout, ownerActivity.findViewById(R.id.main_nav_toolbar), R.string.drawer_open, R.string.drawer_close)
-        drawerToggle.setHomeAsUpIndicator(R.drawable.ic_menu)
+        drawerToggle.setToolbarNavigationClickListener { ownerActivity.onSupportNavigateUp() }
 
         adapter = setupAdapter()
     }

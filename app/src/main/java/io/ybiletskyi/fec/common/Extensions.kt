@@ -1,4 +1,4 @@
-package io.ybiletskyi.fec
+package io.ybiletskyi.fec.common
 
 import android.view.LayoutInflater
 import android.view.View
