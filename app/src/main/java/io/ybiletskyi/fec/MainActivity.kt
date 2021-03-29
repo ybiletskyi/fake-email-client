@@ -2,21 +2,27 @@ package io.ybiletskyi.fec
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import io.ybiletskyi.fec.drawer.DrawerHelper
 
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var viewModel: FiltersViewModel
 
     private val toolbarHelper by lazy {
         ToolbarHelper(this)
     }
 
     private val drawerHelper by lazy {
-        DrawerHelper(this, toolbarHelper.toolbar)
+        DrawerHelper(this, viewModel)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        viewModel = ViewModelProvider(this).get(FiltersViewModel::class.java)
+        toolbarHelper
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {

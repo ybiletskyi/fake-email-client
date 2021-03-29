@@ -2,14 +2,17 @@ package io.ybiletskyi.fec.drawer
 
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import io.ybiletskyi.fec.FiltersViewModel
 import io.ybiletskyi.fec.R
 
-class DrawerHelper(ownerActivity: AppCompatActivity, toolbar: Toolbar) {
+class DrawerHelper(
+    private val ownerActivity: AppCompatActivity,
+    private val viewModel: FiltersViewModel
+) {
 
     private val drawerToggle: ActionBarDrawerToggle
     private val drawerLayout: DrawerLayout
@@ -26,7 +29,7 @@ class DrawerHelper(ownerActivity: AppCompatActivity, toolbar: Toolbar) {
         }
 
         drawerLayout = ownerActivity.findViewById(R.id.drawer_layout)
-        drawerToggle = ActionBarDrawerToggle(ownerActivity, drawerLayout, toolbar, R.string.drawer_open, R.string.drawer_close)
+        drawerToggle = ActionBarDrawerToggle(ownerActivity, drawerLayout, ownerActivity.findViewById(R.id.main_nav_toolbar), R.string.drawer_open, R.string.drawer_close)
         drawerToggle.setHomeAsUpIndicator(R.drawable.ic_menu)
 
         adapter = setupAdapter()
@@ -77,22 +80,17 @@ class DrawerHelper(ownerActivity: AppCompatActivity, toolbar: Toolbar) {
     }
 
     private fun handleMenuItemClick(item: DrawerItem) {
-        when (item) {
-            DrawerItem.Inbox -> {
-
-            }
-            DrawerItem.Trash -> {
-
-            }
-        }
+        viewModel.applyFilter(item)
     }
 
     private fun updateDataSet() {
-        val dataSet = mutableListOf(
-            DrawerData.Header,
-            DrawerData.Folder(DrawerItem.Inbox, true),
-            DrawerData.Folder(DrawerItem.Trash, false)
-        )
+        val dataSet = mutableListOf<DrawerData>()
+        dataSet.add(DrawerData.Header)
+
+        val currentItem = viewModel.emailsFilter.value ?: DrawerItem.values().first()
+        for (item in DrawerItem.values()) {
+            dataSet.add(DrawerData.Folder(item, item == currentItem))
+        }
 
         adapter.setData(dataSet)
     }
