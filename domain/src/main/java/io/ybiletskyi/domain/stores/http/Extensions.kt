@@ -1,4 +1,4 @@
-package io.ybiletskyi.domain.http
+package io.ybiletskyi.domain.stores.http
 
 import kotlinx.coroutines.suspendCancellableCoroutine
 import okhttp3.Call
@@ -59,10 +59,28 @@ fun JSONObject.asLong(key: Any?): Long? {
     })
 }
 
+fun JSONObject.asString(key: Any?, default: String): String {
+    return this.asString(key) ?: default
+}
+
 fun JSONObject.asString(key: Any?): String? {
     return this[key] as? String?
 }
 
-fun JSONObject.asString(key: Any?, default: String): String {
-    return this.asString(key) ?: default
+fun JSONObject.asBoolean(key: Any?, default: Boolean): Boolean {
+    return this.asBoolean(key) ?: default
+}
+
+fun JSONObject.asBoolean(key: Any?): Boolean? {
+    val data = this[key]
+    return (when (data) {
+        is Boolean -> data
+        is String -> when (data) {
+            "true" -> true
+            "false" -> false
+            else -> null
+        }
+        is Number -> data.toInt() != 0
+        else -> null
+    })
 }

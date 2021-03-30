@@ -4,11 +4,16 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import io.ybiletskyi.fec.R
 import io.ybiletskyi.fec.common.inflate
+import io.ybiletskyi.fec.main.holders.EmailViewHolder
+import io.ybiletskyi.fec.main.holders.InfoMessageViewHolder
+import io.ybiletskyi.fec.main.holders.LoadingViewHolder
 
 class EmailsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     companion object {
         private const val EMAIL = 0
+        private const val LOADING = 1
+        private const val MESSAGE = 2
     }
 
     private val dataSet = mutableListOf<ShortData>()
@@ -33,6 +38,8 @@ class EmailsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when(viewType) {
             EMAIL -> EmailViewHolder(parent.inflate(R.layout.view_email_item))
+            LOADING -> LoadingViewHolder(parent.inflate(R.layout.view_loading_item))
+            MESSAGE -> InfoMessageViewHolder(parent.inflate(R.layout.view_info_message_item))
             else -> throw IllegalStateException("Unsupported view type")
         }
     }
@@ -41,6 +48,7 @@ class EmailsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         val data = dataSet[position]
         when (holder) {
             is EmailViewHolder -> (data as? ShortData.EmailShortData)?.let { holder.onBind(data, _itemClickListener) }
+            is InfoMessageViewHolder -> (data as? ShortData.InfoMessage)?.let { holder.onBind(data) }
         }
     }
 
@@ -49,6 +57,8 @@ class EmailsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     override fun getItemViewType(position: Int): Int {
         return when(dataSet[position]) {
             is ShortData.EmailShortData -> EMAIL
+            is ShortData.Loading -> LOADING
+            is ShortData.InfoMessage -> MESSAGE
         }
     }
 

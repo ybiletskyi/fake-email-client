@@ -1,11 +1,11 @@
-package io.ybiletskyi.domain.http
+package io.ybiletskyi.domain.stores.http
 
 import io.ybiletskyi.domain.Email
 import org.json.simple.JSONArray
 import org.json.simple.JSONObject
 import org.json.simple.parser.JSONParser
 
-class EmailsParser {
+internal class EmailsParser {
 
     fun parse(json: String): List<Email>? {
         val root = JSONParser().parse(json) as? JSONArray
@@ -19,11 +19,13 @@ class EmailsParser {
     private fun parseEmail(jsonEmail: JSONObject?): Email? {
         return jsonEmail?.run {
             Email(
-                asInt("id", -1),
-                asLong("time", -1),
-                asString("from", ""),
-                asString("subject", ""),
-                asString("text", "")
+                id = asInt("id", -1),
+                time = asLong("time", -1),
+                from = asString("from", ""),
+                subject = asString("subject", ""),
+                text = asString("text", ""),
+                isViewed = asBoolean("isViewed", false),
+                isDeleted = asBoolean("isDeleted", false)
             )
         }
     }

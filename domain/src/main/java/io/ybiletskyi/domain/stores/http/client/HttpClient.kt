@@ -1,11 +1,11 @@
-package io.ybiletskyi.domain.http.client
+package io.ybiletskyi.domain.stores.http.client
 
-import io.ybiletskyi.domain.http.await
+import io.ybiletskyi.domain.stores.http.await
 import okhttp3.*
 import java.io.IOException
 import java.util.concurrent.TimeUnit
 
-object HttpClient {
+internal object HttpClient {
 
     private val okHttpClient by lazy {
         OkHttpClient.Builder()

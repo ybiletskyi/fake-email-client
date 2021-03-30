@@ -1,6 +1,6 @@
-package io.ybiletskyi.domain.http.client
+package io.ybiletskyi.domain.stores.http.client
 
-sealed class HttpStatus {
+internal sealed class HttpStatus {
     data class Success(val json: String): HttpStatus()
     data class Error(val error: String?): HttpStatus()
 }

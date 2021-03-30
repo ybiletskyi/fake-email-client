@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import io.ybiletskyi.fec.EmailsViewModel
 import io.ybiletskyi.fec.FiltersViewModel
 import io.ybiletskyi.fec.R
 import io.ybiletskyi.fec.common.ScreenSettings
@@ -15,6 +16,7 @@ class MainFragment : BaseFragment(), EmailsAdapter.OnItemClickListener {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var filtersViewModel: FiltersViewModel
+    private lateinit var emailsViewModel: EmailsViewModel
     private val adapter by lazy { EmailsAdapter() }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -30,6 +32,11 @@ class MainFragment : BaseFragment(), EmailsAdapter.OnItemClickListener {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        emailsViewModel = ViewModelProvider(this).get(EmailsViewModel::class.java)
+        emailsViewModel.emailList.observe(viewLifecycleOwner, { dataList ->
+            adapter.setDataSet(dataList)
+        })
+
         filtersViewModel = ViewModelProvider(requireActivity()).get(FiltersViewModel::class.java)
         filtersViewModel.emailsFilter.observe(viewLifecycleOwner, { filterItem ->
             // update title with according filter name
@@ -40,6 +47,8 @@ class MainFragment : BaseFragment(), EmailsAdapter.OnItemClickListener {
     override fun onResume() {
         super.onResume()
         adapter.itemClickListener = this
+
+        emailsViewModel.loadNextEmailsPage()
     }
 
     override fun onPause() {

@@ -5,10 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import io.ybiletskyi.fec.R
 
-class ToolbarHelper(
-    ownerActivity: AppCompatActivity
-) {
-
+class ToolbarHelper(ownerActivity: AppCompatActivity) {
     private val actionBar: ActionBar
 
     init {

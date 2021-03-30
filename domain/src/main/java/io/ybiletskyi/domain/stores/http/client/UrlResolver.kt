@@ -1,20 +1,20 @@
-package io.ybiletskyi.domain.http.client
+package io.ybiletskyi.domain.stores.http.client
 
 import java.lang.StringBuilder
 
-enum class Url(val path: String) {
+internal enum class Url(val path: String) {
     HostUrl("https://my-json-server.typicode.com/ybiletskyi/fake-email-client"),
 
     // end points
     EmailsUrl("${HostUrl.path}/emails")
 }
 
-enum class UrlArg(val arg: String) {
+internal enum class UrlArg(val arg: String) {
     Page("_start"),
     Limit("_limit")
 }
 
-class UrlResolver(
+internal class UrlResolver(
     private val url: Url,
     private val params: MutableMap<UrlArg, Any> = mutableMapOf()
 ) {

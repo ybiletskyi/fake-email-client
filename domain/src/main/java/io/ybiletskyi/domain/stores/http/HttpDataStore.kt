@@ -1,11 +1,11 @@
-package io.ybiletskyi.domain.http
+package io.ybiletskyi.domain.stores.http
 
-import io.ybiletskyi.domain.DataStore
+import io.ybiletskyi.domain.stores.DataStore
 import io.ybiletskyi.domain.Email
 import io.ybiletskyi.domain.Result
-import io.ybiletskyi.domain.http.client.*
+import io.ybiletskyi.domain.stores.http.client.*
 
-class HttpDataStore(
+internal class HttpDataStore(
     private val httpClient: HttpClient,
     private val parser: EmailsParser
 ): DataStore {

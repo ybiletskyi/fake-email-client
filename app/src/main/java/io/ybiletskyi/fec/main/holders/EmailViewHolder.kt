@@ -1,9 +1,11 @@
-package io.ybiletskyi.fec.main
+package io.ybiletskyi.fec.main.holders
 
 import android.view.View
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import io.ybiletskyi.fec.R
+import io.ybiletskyi.fec.main.EmailsAdapter
+import io.ybiletskyi.fec.main.ShortData
 
 class EmailViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 

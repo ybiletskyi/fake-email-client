@@ -5,5 +5,7 @@ data class Email(
     val time: Long,
     val from: String,
     val subject: String,
-    val text: String
+    val text: String,
+    val isViewed: Boolean,
+    val isDeleted: Boolean
 )
