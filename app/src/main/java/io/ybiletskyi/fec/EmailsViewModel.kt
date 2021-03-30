@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import io.ybiletskyi.domain.EmailsRepository
 import io.ybiletskyi.domain.Result
 import io.ybiletskyi.fec.main.EmailsMapper
+import io.ybiletskyi.fec.main.PaginationListener
 import io.ybiletskyi.fec.main.ShortData
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -23,12 +24,25 @@ class EmailsViewModel : ViewModel() {
     private val mapper = EmailsMapper()
 
     // paging params
-    private val pageLimit = 10
+    private val pageLimit = PaginationListener.PAGE_LIMIT
     private var page = 0
 
+    var isLoading = false
+    val isInTheEndOfList
+        get() = page == -1
+
+    init {
+        loadNextEmailsPage()
+    }
+
     fun loadNextEmailsPage() {
+        // do not try load data if we reached to the end of list
+        if (isInTheEndOfList)
+            return
+
         viewModelScope.launch {
-            // notify UI that data start loading
+            // notify UI that data loading is started
+            isLoading = true
             _emailsList.value = mutableListOf<ShortData>().apply {
                 addAll(cachedEmails)
                 add(ShortData.Loading)
@@ -43,6 +57,10 @@ class EmailsViewModel : ViewModel() {
                     // also return cached data
                     is Result.Success -> {
                         val shortEmails = result.data.map { email -> mapper.mapData(email) }
+                        // view model loaded all emails
+                        if (shortEmails.isEmpty())
+                            page = -1
+
                         cachedEmails.addAll(shortEmails)
                         cachedEmails
                     }
@@ -54,6 +72,9 @@ class EmailsViewModel : ViewModel() {
             } else {
                 _emailsList.value = result
             }
+
+            // notify UI that data loading is ended
+            isLoading = false
         }
     }
 }

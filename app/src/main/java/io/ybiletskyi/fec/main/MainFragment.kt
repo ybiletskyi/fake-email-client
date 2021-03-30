@@ -15,13 +15,16 @@ import io.ybiletskyi.fec.utils.MyDividerItemDecoration
 class MainFragment : BaseFragment(), EmailsAdapter.OnItemClickListener {
 
     private lateinit var recyclerView: RecyclerView
+    private lateinit var layoutManager: LinearLayoutManager
+
     private lateinit var filtersViewModel: FiltersViewModel
     private lateinit var emailsViewModel: EmailsViewModel
+
     private val adapter by lazy { EmailsAdapter() }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val layoutManager = LinearLayoutManager(requireContext())
+        layoutManager = LinearLayoutManager(requireContext())
         val itemDecoration = MyDividerItemDecoration(requireContext())
 
         recyclerView = view.findViewById(R.id.recycler_view)
@@ -47,13 +50,13 @@ class MainFragment : BaseFragment(), EmailsAdapter.OnItemClickListener {
     override fun onResume() {
         super.onResume()
         adapter.itemClickListener = this
-
-        emailsViewModel.loadNextEmailsPage()
+        recyclerView.addOnScrollListener(onScrollListener)
     }
 
     override fun onPause() {
         super.onPause()
         adapter.itemClickListener = null
+        recyclerView.removeOnScrollListener(onScrollListener)
     }
 
     override fun getLayoutId(): Int = R.layout.fragment_main
@@ -68,5 +71,21 @@ class MainFragment : BaseFragment(), EmailsAdapter.OnItemClickListener {
 
     override fun onItemLongClick(data: ShortData.EmailShortData) {
 
+    }
+
+    private val onScrollListener by lazy {
+        object : PaginationListener(layoutManager) {
+            override fun loadMoreItems() {
+                emailsViewModel.loadNextEmailsPage()
+            }
+
+            override fun isLastPage(): Boolean {
+                return emailsViewModel.isInTheEndOfList
+            }
+
+            override fun isLoading(): Boolean {
+                return emailsViewModel.isLoading
+            }
+        }
     }
 }
