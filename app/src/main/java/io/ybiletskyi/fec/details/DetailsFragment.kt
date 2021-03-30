@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import android.view.View
+import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
 import io.ybiletskyi.fec.R
 import io.ybiletskyi.fec.common.ScreenSettings
@@ -26,16 +28,32 @@ class DetailsFragment : BaseFragment() {
 
     private lateinit var emailDetailViewModel: EmailDetailViewModel
 
+    private lateinit var senderTextView: TextView
+    private lateinit var dateTextView: TextView
+    private lateinit var subjectTextView: TextView
+    private lateinit var descriptionTextView: TextView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        senderTextView = view.findViewById(R.id.sender)
+        dateTextView = view.findViewById(R.id.date)
+        subjectTextView = view.findViewById(R.id.subject)
+        descriptionTextView = view.findViewById(R.id.description)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         emailDetailViewModel = ViewModelProvider(this).get(EmailDetailViewModel::class.java)
         emailDetailViewModel.emailData.observe(viewLifecycleOwner, { emaildData ->
-
+            senderTextView.text = String.format(getString(R.string.str_from), emaildData.sender)
+            dateTextView.text = emaildData.date
+            subjectTextView.text = String.format(getString(R.string.str_subject), emaildData.subject)
+            descriptionTextView.text = emaildData.description
         })
 
         val emailId = requireArguments().getInt(EMAIL_ID)

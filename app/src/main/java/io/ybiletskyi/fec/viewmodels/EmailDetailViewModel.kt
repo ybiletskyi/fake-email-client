@@ -12,7 +12,7 @@ class EmailDetailViewModel : ViewModel() {
 
     fun loadEmailDetail(id: Int) {
         _emailData.value = EmailDetail(
-                0, "", "", "","", false, false
+                0, "Bro letter", "Bro from Canada", "Hi! How are you?","27.10.1996", false, false
         )
     }
 }
