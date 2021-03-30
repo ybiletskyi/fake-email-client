@@ -20,7 +20,7 @@ class ToolbarHelper(
     fun setUpHomeButton(state: ButtonState) {
         when (state) {
             ButtonState.BURGER -> {
-                actionBar.setDisplayShowHomeEnabled(false)
+                actionBar.setDisplayShowHomeEnabled(true)
                 actionBar.setDisplayHomeAsUpEnabled(true)
                 actionBar.setHomeAsUpIndicator(R.drawable.ic_menu)
             }
@@ -28,6 +28,18 @@ class ToolbarHelper(
                 actionBar.setDisplayShowHomeEnabled(true)
                 actionBar.setDisplayHomeAsUpEnabled(true)
                 actionBar.setHomeAsUpIndicator(R.drawable.ic_back_arrow)
+            }
+        }
+    }
+
+    fun setUpTitle(title: String?) {
+        when {
+            title != null -> {
+                actionBar.setDisplayShowTitleEnabled(true)
+                actionBar.title = title
+            }
+            else -> {
+                actionBar.setDisplayShowTitleEnabled(false)
             }
         }
     }

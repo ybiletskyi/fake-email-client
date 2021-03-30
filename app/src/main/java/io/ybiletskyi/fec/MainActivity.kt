@@ -59,10 +59,12 @@ class MainActivity : AppCompatActivity() {
             is ScreenSettings.Default -> {
                 drawerHelper.enableDrawer = true
                 toolbarHelper.setUpHomeButton(ToolbarHelper.ButtonState.BURGER)
+                toolbarHelper.setUpTitle(screenSettings.title)
             }
             is ScreenSettings.Details -> {
                 drawerHelper.enableDrawer = false
                 toolbarHelper.setUpHomeButton(ToolbarHelper.ButtonState.BACK_BUTTON)
+                toolbarHelper.setUpTitle(null) // hide title
             }
         }
     }

@@ -1,6 +1,6 @@
 package io.ybiletskyi.fec.common
 
 sealed class ScreenSettings {
-    object Default: ScreenSettings()
+    data class Default(val title: String): ScreenSettings()
     object Details: ScreenSettings()
 }

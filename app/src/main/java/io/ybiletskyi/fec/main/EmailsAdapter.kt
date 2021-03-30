@@ -13,6 +13,17 @@ class EmailsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val dataSet = mutableListOf<ShortData>()
 
+    var itemClickListener: OnItemClickListener? = null
+    private val _itemClickListener = object : OnItemClickListener {
+        override fun onItemClick(data: ShortData.EmailShortData) {
+            itemClickListener?.onItemClick(data)
+        }
+
+        override fun onItemLongClick(data: ShortData.EmailShortData) {
+            itemClickListener?.onItemLongClick(data)
+        }
+    }
+
     fun setDataSet(newDataSet: List<ShortData>) {
         dataSet.clear()
         dataSet.addAll(newDataSet)
@@ -29,7 +40,7 @@ class EmailsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val data = dataSet[position]
         when (holder) {
-            is EmailViewHolder -> (data as? ShortData.EmailShortData)?.let { holder.onBind(data) }
+            is EmailViewHolder -> (data as? ShortData.EmailShortData)?.let { holder.onBind(data, _itemClickListener) }
         }
     }
 
@@ -39,5 +50,10 @@ class EmailsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         return when(dataSet[position]) {
             is ShortData.EmailShortData -> EMAIL
         }
+    }
+
+    interface OnItemClickListener {
+        fun onItemClick(data: ShortData.EmailShortData)
+        fun onItemLongClick(data: ShortData.EmailShortData)
     }
 }

@@ -13,7 +13,28 @@ class EmailViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     private val dateView = view.findViewById<TextView>(R.id.date)
     private val descriptionView = view.findViewById<TextView>(R.id.description)
 
-    fun onBind(emailShortData: ShortData.EmailShortData) {
+    private var emailData: ShortData.EmailShortData? = null
+    private var itemClickListener: EmailsAdapter.OnItemClickListener? = null
+
+    init {
+        itemView.setOnClickListener {
+            if (adapterPosition != RecyclerView.NO_POSITION) {
+                emailData?.let { itemClickListener?.onItemClick(it) }
+            }
+        }
+
+        itemView.setOnLongClickListener {
+            if (adapterPosition != RecyclerView.NO_POSITION) {
+                emailData?.let { itemClickListener?.onItemLongClick(it) }
+            }
+            return@setOnLongClickListener true
+        }
+    }
+
+    fun onBind(emailShortData: ShortData.EmailShortData, listener: EmailsAdapter.OnItemClickListener) {
+        itemClickListener = listener
+        emailData = emailShortData
+
         senderView.text = emailShortData.sender
         subjectView.text = emailShortData.subject
         dateView.text = emailShortData.date
