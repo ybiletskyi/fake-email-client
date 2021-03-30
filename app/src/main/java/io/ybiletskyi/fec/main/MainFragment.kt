@@ -5,8 +5,8 @@ import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import io.ybiletskyi.fec.EmailsViewModel
-import io.ybiletskyi.fec.FiltersViewModel
+import io.ybiletskyi.fec.viewmodels.EmailsViewModel
+import io.ybiletskyi.fec.viewmodels.FiltersViewModel
 import io.ybiletskyi.fec.R
 import io.ybiletskyi.fec.common.ScreenSettings
 import io.ybiletskyi.fec.common.fragment.BaseFragment
@@ -66,7 +66,7 @@ class MainFragment : BaseFragment(), EmailsAdapter.OnItemClickListener {
     )
 
     override fun onItemClick(data: ShortData.EmailShortData) {
-
+        getAppRouter().openDetails(data.id)
     }
 
     override fun onItemLongClick(data: ShortData.EmailShortData) {

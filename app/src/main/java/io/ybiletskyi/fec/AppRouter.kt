@@ -11,8 +11,8 @@ class AppRouter(private val activity: MainActivity) {
         navigateTo(mainFragment)
     }
 
-    fun openDetails() {
-        val detailsFragment = DetailsFragment()
+    fun openDetails(emailId: Int) {
+        val detailsFragment = DetailsFragment.newInstance(emailId)
         navigateTo(detailsFragment)
     }
 

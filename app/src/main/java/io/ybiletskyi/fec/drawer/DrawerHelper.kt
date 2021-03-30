@@ -6,7 +6,7 @@ import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import io.ybiletskyi.fec.FiltersViewModel
+import io.ybiletskyi.fec.viewmodels.FiltersViewModel
 import io.ybiletskyi.fec.R
 
 class DrawerHelper(

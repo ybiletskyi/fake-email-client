@@ -7,6 +7,7 @@ sealed class ShortData {
     data class InfoMessage(val message: String): ShortData()
     // valid data
     data class EmailShortData(
+        val id: Int,
         val subject: String,
         val sender: String,
         val description: String,

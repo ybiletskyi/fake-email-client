@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProvider
 import io.ybiletskyi.fec.common.ScreenSettings
 import io.ybiletskyi.fec.drawer.DrawerHelper
 import io.ybiletskyi.fec.utils.ToolbarHelper
+import io.ybiletskyi.fec.viewmodels.FiltersViewModel
 
 class MainActivity : AppCompatActivity() {
 

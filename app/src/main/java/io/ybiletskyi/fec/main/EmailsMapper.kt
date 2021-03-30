@@ -8,6 +8,7 @@ class EmailsMapper {
 
     fun mapData(email: Email): ShortData.EmailShortData {
         return ShortData.EmailShortData(
+            id = email.id,
             subject = email.subject,
             sender = email.from,
             description = email.text,

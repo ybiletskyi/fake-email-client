@@ -1,4 +1,4 @@
-package io.ybiletskyi.fec
+package io.ybiletskyi.fec.viewmodels
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
