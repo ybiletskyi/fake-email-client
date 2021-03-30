@@ -3,7 +3,6 @@ package io.ybiletskyi.fec.main
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import io.ybiletskyi.fec.EmailsViewModel
@@ -11,6 +10,7 @@ import io.ybiletskyi.fec.FiltersViewModel
 import io.ybiletskyi.fec.R
 import io.ybiletskyi.fec.common.ScreenSettings
 import io.ybiletskyi.fec.common.fragment.BaseFragment
+import io.ybiletskyi.fec.utils.MyDividerItemDecoration
 
 class MainFragment : BaseFragment(), EmailsAdapter.OnItemClickListener {
 
@@ -22,7 +22,7 @@ class MainFragment : BaseFragment(), EmailsAdapter.OnItemClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val layoutManager = LinearLayoutManager(requireContext())
-        val itemDecoration = DividerItemDecoration(requireContext(), layoutManager.orientation)
+        val itemDecoration = MyDividerItemDecoration(requireContext())
 
         recyclerView = view.findViewById(R.id.recycler_view)
         recyclerView.layoutManager = layoutManager

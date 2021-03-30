@@ -18,6 +18,6 @@ class EmailsRepository(
 
     override suspend fun emails(page: Int, limit: Int): Result<List<Email>> {
         delay(5000)
-        return Result.Success(emptyList())
+        return remoteDataStore.emails(page, limit)
     }
 }

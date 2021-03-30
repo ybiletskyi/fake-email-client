@@ -26,8 +26,12 @@ internal object HttpClient {
             return HttpStatus.Error(e.message)
         }
 
+        val responseStr = if (response.isSuccessful) {
+            response.body?.string()
+        } else null
+
         return when {
-            response.isSuccessful && response.body != null -> HttpStatus.Success(response.body.toString())
+            responseStr != null -> HttpStatus.Success(responseStr)
             else -> HttpStatus.Error("Bad response")
         }
     }

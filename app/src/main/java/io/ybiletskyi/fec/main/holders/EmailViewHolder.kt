@@ -6,8 +6,9 @@ import androidx.recyclerview.widget.RecyclerView
 import io.ybiletskyi.fec.R
 import io.ybiletskyi.fec.main.EmailsAdapter
 import io.ybiletskyi.fec.main.ShortData
+import io.ybiletskyi.fec.utils.ViewHolderItemDecorate
 
-class EmailViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+class EmailViewHolder(view: View) : RecyclerView.ViewHolder(view), ViewHolderItemDecorate {
 
     private val indicatorView = view.findViewById<View>(R.id.indicator)
     private val senderView = view.findViewById<TextView>(R.id.sender)
@@ -48,4 +49,6 @@ class EmailViewHolder(view: View) : RecyclerView.ViewHolder(view) {
             indicatorView.visibility = View.INVISIBLE
         }
     }
+
+    override fun isDecorate(): Boolean = true
 }
