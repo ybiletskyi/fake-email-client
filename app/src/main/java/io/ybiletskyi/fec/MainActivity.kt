@@ -27,8 +27,10 @@ class MainActivity : AppCompatActivity() {
         toolbarHelper
         // init view model
         viewModel = ViewModelProvider(this).get(FiltersViewModel::class.java)
-        // open main fragment
-        appRouter.openMainScreen()
+        // open main fragment, if activity is not recreated
+        if (savedInstanceState == null) {
+            appRouter.openMainScreen()
+        }
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
