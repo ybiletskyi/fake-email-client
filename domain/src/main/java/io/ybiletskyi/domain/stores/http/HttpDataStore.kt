@@ -35,7 +35,7 @@ internal class HttpDataStore(
 
     override suspend fun emails(page: Int, limit: Int, isDeleted: Boolean): Result<List<Email>> {
         val url = UrlResolver(Url.EmailsUrl)
-            .param(UrlArg.Page, page)
+            .param(UrlArg.Start, page * limit)
             .param(UrlArg.Limit, limit)
             .param(UrlArg.Deleted, isDeleted)
             .build()

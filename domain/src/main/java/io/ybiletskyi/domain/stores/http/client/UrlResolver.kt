@@ -10,7 +10,7 @@ internal enum class Url(val path: String) {
 }
 
 internal enum class UrlArg(val arg: String) {
-    Page("_start"),
+    Start("_start"),
     Limit("_limit"),
     Deleted("isDeleted"),
     Id("id")
@@ -31,9 +31,11 @@ internal class UrlResolver(
             return url.path
 
         val builder = StringBuilder()
+        val urlParamsStr = params.map { "${it.key.arg}=${it.value}" }.joinToString(separator = "&")
+
         builder.append(url.path)
         builder.append("?")
-        params.forEach { entry -> builder.append("${entry.key.arg}=${entry.value}") }
+        builder.append(urlParamsStr)
 
         return builder.toString()
     }
