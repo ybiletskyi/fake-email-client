@@ -28,7 +28,7 @@ class EmailsRepository(
         // as remote data store doesn't support modifications, local changes have higher priority than remote.
         // so repository firstly load data from local storage. if data is not exist in the local store try to load from remote store
         val localResult = localDataStore.email(id)
-        val isLocalCallSuccess = (localResult as? Result.Success)?.data == null
+        val isLocalCallSuccess = (localResult as? Result.Success)?.data != null
         return when (isLocalCallSuccess) {
             true -> localResult
             false -> remoteDataStore.email(id).apply {

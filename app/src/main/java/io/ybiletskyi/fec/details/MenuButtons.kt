@@ -4,6 +4,7 @@ import io.ybiletskyi.fec.R
 
 enum class MenuButtons(val titleRes: Int, val icRes: Int) {
     DELETE(R.string.str_delete, R.drawable.ic_delete),
+    RESTORE(R.string.str_restore, R.drawable.ic_restore),
     MARK_READ(R.string.str_mark_read, R.drawable.ic_mark_email_read),
     MARK_UNREAD(R.string.str_mark_unread, R.drawable.ic_mark_email_unread);
 
@@ -16,9 +17,12 @@ enum class MenuButtons(val titleRes: Int, val icRes: Int) {
                     add(MARK_READ)
                 }
 
-                if (!isDeleted) {
+                if (isDeleted) {
+                    add(RESTORE)
+                } else {
                     add(DELETE)
                 }
+
             }.toTypedArray()
         }
     }

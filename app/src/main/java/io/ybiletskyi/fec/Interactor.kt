@@ -22,10 +22,10 @@ object Interactor : DataStore {
     }
 
     override suspend fun saveEmails(emails: Collection<Email>): Result<Unit> {
-        TODO("Not yet implemented")
+        return repository.saveEmails(emails)
     }
 
     override suspend fun updateEmails(emails: Collection<Email>): Result<Unit> {
-        TODO("Not yet implemented")
+        return repository.updateEmails(emails)
     }
 }

@@ -12,6 +12,7 @@
 
     <!-- menu titles -->
     <string name="str_delete">Delete</string>
+    <string name="str_restore">Restore</string>
     <string name="str_mark_read">Mark read</string>
     <string name="str_mark_unread">Mark unread</string>
 

@@ -13,7 +13,7 @@ class DetailsMapper {
             sender = email.from,
             description = email.text,
             date = getDate(email.time),
-            isViewed = email.isViewed,
+            isRead = !email.isViewed,
             isDeleted = email.isDeleted
         )
     }

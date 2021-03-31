@@ -12,6 +12,6 @@ sealed class DetailData {
         val sender: String,
         val description: String,
         val date: String,
-        val isViewed: Boolean,
+        val isRead: Boolean,
         val isDeleted: Boolean): DetailData()
 }

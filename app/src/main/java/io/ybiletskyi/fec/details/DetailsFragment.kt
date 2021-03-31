@@ -89,15 +89,23 @@ class DetailsFragment : BaseFragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             MenuButtons.DELETE.ordinal -> {
-
+                progressView.visibility = View.VISIBLE
+                emailDetailViewModel.changeFolder(isDeleted = true)
+                true
+            }
+            MenuButtons.RESTORE.ordinal -> {
+                progressView.visibility = View.VISIBLE
+                emailDetailViewModel.changeFolder(isDeleted = false)
                 true
             }
             MenuButtons.MARK_READ.ordinal -> {
-
+                progressView.visibility = View.VISIBLE
+                emailDetailViewModel.changeState(isRead = true)
                 true
             }
             MenuButtons.MARK_UNREAD.ordinal -> {
-
+                progressView.visibility = View.VISIBLE
+                emailDetailViewModel.changeState(isRead = false)
                 true
             }
             else -> false
@@ -117,6 +125,10 @@ class DetailsFragment : BaseFragment() {
 
         // show error message
         errorTextView.text = error.message
+
+        // update menu
+        menuButtons.clear()
+        getMainActivity().invalidateOptionsMenu()
     }
 
     private fun handleData(emailData: DetailData.EmailDetail) {
@@ -132,7 +144,7 @@ class DetailsFragment : BaseFragment() {
 
         // update menu
         menuButtons.clear()
-        menuButtons.addAll(MenuButtons.buildMenu(emailData.isDeleted, emailData.isViewed))
+        menuButtons.addAll(MenuButtons.buildMenu(emailData.isDeleted, emailData.isRead))
         getMainActivity().invalidateOptionsMenu()
     }
 }
