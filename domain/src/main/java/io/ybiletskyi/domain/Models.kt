@@ -1,11 +1,16 @@
 package io.ybiletskyi.domain
 
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity
 data class Email(
-    val id: Int,
-    val time: Long,
-    val from: String,
-    val subject: String,
-    val text: String,
-    val isViewed: Boolean,
-    val isDeleted: Boolean
+    @PrimaryKey val id: Int,
+    @ColumnInfo(name = "time") val time: Long,
+    @ColumnInfo(name = "from") val from: String,
+    @ColumnInfo(name = "subject") val subject: String,
+    @ColumnInfo(name = "text") val text: String,
+    @ColumnInfo(name = "is_viewed") val isViewed: Boolean,
+    @ColumnInfo(name = "is_deleted") val isDeleted: Boolean
 )

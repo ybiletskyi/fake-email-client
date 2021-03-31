@@ -4,5 +4,10 @@ import io.ybiletskyi.domain.Email
 import io.ybiletskyi.domain.Result
 
 interface DataStore {
-    suspend fun emails(page: Int, limit: Int): Result<List<Email>>
+    /** load emails from store **/
+    suspend fun emails(page: Int, limit: Int, isDeleted: Boolean): Result<List<Email>>
+    /** save emails in store **/
+    suspend fun saveEmails(emails: Collection<Email>): Result<Unit>
+    /** update emails in store **/
+    suspend fun updateEmails(emails: Collection<Email>): Result<Unit>
 }

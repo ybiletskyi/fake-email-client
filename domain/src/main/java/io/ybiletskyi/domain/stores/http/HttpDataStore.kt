@@ -16,7 +16,7 @@ internal class HttpDataStore(
         }
     }
 
-    override suspend fun emails(page: Int, limit: Int): Result<List<Email>> {
+    override suspend fun emails(page: Int, limit: Int, isDeleted: Boolean): Result<List<Email>> {
         val url = UrlResolver(Url.EmailsUrl)
             .param(UrlArg.Page, page)
             .param(UrlArg.Limit, limit)
@@ -32,5 +32,13 @@ internal class HttpDataStore(
                 }
             }
         }
+    }
+
+    override suspend fun saveEmails(emails: Collection<Email>): Result<Unit> {
+        return Result.Error("Http store doesn't support save operation")
+    }
+
+    override suspend fun updateEmails(emails: Collection<Email>): Result<Unit> {
+        return Result.Error("Http store doesn't support update operation")
     }
 }

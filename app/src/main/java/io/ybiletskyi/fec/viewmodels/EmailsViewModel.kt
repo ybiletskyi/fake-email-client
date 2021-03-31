@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import io.ybiletskyi.domain.EmailsRepository
 import io.ybiletskyi.domain.Result
+import io.ybiletskyi.fec.App
 import io.ybiletskyi.fec.main.EmailsMapper
 import io.ybiletskyi.fec.main.PaginationListener
 import io.ybiletskyi.fec.main.ShortData
@@ -20,7 +21,7 @@ class EmailsViewModel : ViewModel() {
 
     // loaded data
     private val cachedEmails = mutableListOf<ShortData.EmailShortData>()
-    private val repository = EmailsRepository.newInstance()
+    private val repository = EmailsRepository.newInstance(App.context)
     private val mapper = EmailsMapper()
 
     // paging params
@@ -50,7 +51,7 @@ class EmailsViewModel : ViewModel() {
 
             val result: List<ShortData> = withContext(Dispatchers.IO) {
                 // load emails from repository
-                return@withContext when (val result = repository.emails(page++, pageLimit)) {
+                return@withContext when (val result = repository.emails(page++, pageLimit, false)) {
                     // if repository returns error show it immediately
                     is Result.Error -> listOf(ShortData.InfoMessage(result.message ?: "Unknown error"))
                     // if repository returns next page -- add data to the memory cache
