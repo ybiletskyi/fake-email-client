@@ -37,7 +37,8 @@ class MainFragment : BaseFragment(), EmailsAdapter.OnItemClickListener {
         super.onActivityCreated(savedInstanceState)
         emailsViewModel = ViewModelProvider(this).get(EmailsViewModel::class.java)
         emailsViewModel.emailList.observe(viewLifecycleOwner, { dataList ->
-            adapter.setDataSet(dataList)
+            // update recycler view on the next frame
+            recyclerView.post { adapter.setDataSet(dataList) }
         })
 
         filtersViewModel = ViewModelProvider(requireActivity()).get(FiltersViewModel::class.java)
