@@ -40,6 +40,7 @@ internal class HttpDataStore(
             .param(UrlArg.Deleted, isDeleted)
             .build()
 
+        // ordering of emails by DESC should be done on the server part
         return when(val status = httpClient.get(url)) {
             is HttpStatus.Error -> Result.Error(status.error)
             is HttpStatus.Success -> {

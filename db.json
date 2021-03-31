@@ -1,11 +1,238 @@
 {
   "emails": [
     {
-      "id": 0,
-      "time": 1616747796,
+      "id": 23,
+      "time": 1617170796,
+      "from": "GitHub",
+      "subject": "New PR",
+      "text": "Please review new PR in the repo",
+      "isDeleted": false,
+      "isViewed": false
+    },
+    {
+      "id": 23,
+      "time": 1617090796,
+      "from": "My bro from Canada",
+      "subject": "Visit to Canada",
+      "text": "Hi! When will you visit canada?",
+      "isDeleted": false,
+      "isViewed": true
+    },
+    {
+      "id": 22,
+      "time": 1617070796,
+      "from": "GitHub",
+      "subject": "Action for PR #55",
+      "text": "Action for PR #55 is successful.",
+      "isDeleted": false,
+      "isViewed": false
+    },
+    {
+      "id": 21,
+      "time": 1617050796,
+      "from": "GitHub",
+      "subject": "Action for PR #53",
+      "text": "Action for PR #53 is failed.",
+      "isDeleted": false,
+      "isViewed": false
+    },
+    {
+      "id": 20,
+      "time": 1617030796,
+      "from": "GitHub",
+      "subject": "Action for PR #50",
+      "text": "Action for PR #50 is successful.",
+      "isDeleted": false,
+      "isViewed": false
+    },
+    {
+      "id": 19,
+      "time": 1617000796,
+      "from": "Bitbucket",
+      "subject": "Issue closed",
+      "text": "Please review status of issue in the repo",
+      "isDeleted": false,
+      "isViewed": true
+    },
+    {
+      "id": 18,
+      "time": 1616990796,
+      "from": "Bitbucket",
+      "subject": "Issue closed",
+      "text": "Please review status of issue in the repo",
+      "isDeleted": false,
+      "isViewed": true
+    },
+    {
+      "id": 17,
+      "time": 1616970796,
+      "from": "Bitbucket",
+      "subject": "New issue created",
+      "text": "Please review new issue in the repo",
+      "isDeleted": false,
+      "isViewed": true
+    },
+    {
+      "id": 16,
+      "time": 1616950796,
+      "from": "GitHub",
+      "subject": "New PR",
+      "text": "Please review new PR in the repo",
+      "isDeleted": false,
+      "isViewed": true
+    },
+    {
+      "id": 15,
+      "time": 1616930796,
+      "from": "MegaMall",
+      "subject": "Online shopping",
+      "text": "We start the online shopping in our mall.",
+      "isDeleted": true,
+      "isViewed": false
+    },
+    {
+      "id": 15,
+      "time": 1616900796,
+      "from": "Work boss",
+      "subject": "Online Meeting",
+      "text": "We will have a meeting at the 5 pm.",
+      "isDeleted": false,
+      "isViewed": true
+    },
+    {
+      "id": 14,
+      "time": 1616885796,
+      "from": "Work boss",
+      "subject": "Meeting",
+      "text": "We need to plan a new online meeting.",
+      "isDeleted": false,
+      "isViewed": true
+    },
+    {
+      "id": 13,
+      "time": 1616870796,
+      "from": "MegaMall",
+      "subject": "New shop in your city",
+      "text": "It's new amazing toy shop!!!!",
+      "isDeleted": false,
+      "isViewed": false
+    },
+    {
+      "id": 12,
+      "time": 1616850796,
+      "from": "MegaMall",
+      "subject": "New shop in your city",
+      "text": "It's sport shop with amazing equipment.",
+      "isDeleted": false,
+      "isViewed": false
+    },
+    {
+      "id": 11,
+      "time": 1616830796,
+      "from": "KFC",
+      "subject": "New chicken burger",
+      "text": "Hello! What is your dream?",
+      "isDeleted": false,
+      "isViewed": true
+    },
+    {
+      "id": 10,
+      "time": 1616810796,
+      "from": "KFC",
+      "subject": "New chicken burger",
+      "text": "Hello! Do you want to try new Burger?",
+      "isDeleted": false,
+      "isViewed": true
+    },
+    {
+      "id": 9,
+      "time": 1616800796,
+      "from": "Street Cat",
+      "subject": "Fight with dog",
+      "text": "The dog is very strong!",
+      "isDeleted": true,
+      "isViewed": true
+    },
+    {
+      "id": 8,
+      "time": 1616799796,
+      "from": "Street Cat",
+      "subject": "Fight with dog",
+      "text": "Help me!",
+      "isDeleted": false,
+      "isViewed": true
+    },
+    {
+      "id": 7,
+      "time": 1616798796,
+      "from": "Street Dog",
+      "subject": "Fight with cat",
+      "text": "Do you want to save your time?",
+      "isDeleted": false,
+      "isViewed": true
+    },
+    {
+      "id": 6,
+      "time": 1616797796,
+      "from": "Street Dog",
+      "subject": "New house",
+      "text": "Where my new house?",
+      "isDeleted": false,
+      "isViewed": true
+    },
+    {
+      "id": 5,
+      "time": 1616795796,
+      "from": "Street Cat",
+      "subject": "Meeting",
+      "text": "Hi! Where are you?",
+      "isDeleted": false,
+      "isViewed": true
+    },
+    {
+      "id": 4,
+      "time": 1616790796,
+      "from": "Mu bro from USA",
+      "subject": "Hello my bro",
+      "text": "Hi! How are you?",
+      "isDeleted": false,
+      "isViewed": true
+    },
+    {
+      "id": 3,
+      "time": 1616787796,
+      "from": "Zeplin",
+      "subject": "Design was updated",
+      "text": "Review work from designer",
+      "isDeleted": false,
+      "isViewed": true
+    },
+    {
+      "id": 2,
+      "time": 1616777796,
       "from": "Denis Pupkin",
       "subject": "Hello bro",
-      "text": "Hi! How are you?"
+      "text": "Hi! How are you?",
+      "isDeleted": false,
+      "isViewed": true
+    },
+    {
+      "id": 1,
+      "time": 1616757796,
+      "from": "GitHub",
+      "subject": "New PR",
+      "text": "Please review new PR in the repo.",
+      "isDeleted": false,
+      "isViewed": true
+    },
+    {
+      "id": 0,
+      "time": 1616747796,
+      "from": "Ivan Pupkin",
+      "subject": "New letter",
+      "text": "Test Letter for future work.",
+      "isDeleted": false,
+      "isViewed": true
     }
   ]
 }
