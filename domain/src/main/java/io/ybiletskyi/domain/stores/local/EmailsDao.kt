@@ -22,6 +22,9 @@ internal abstract class EmailsDao {
         }
     }
 
+    @Query("SELECT * FROM email WHERE id LIKE :id")
+    abstract suspend fun email(id: Int): Email
+
     @Query("SELECT * FROM email WHERE is_deleted LIKE :isDeleted ORDER BY time DESC LIMIT :pageLimit OFFSET :page")
     abstract suspend fun emails(page: Int, pageLimit: Int, isDeleted: Int): List<Email>
 }

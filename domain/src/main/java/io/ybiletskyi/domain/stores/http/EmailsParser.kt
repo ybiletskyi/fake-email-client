@@ -7,13 +7,17 @@ import org.json.simple.parser.JSONParser
 
 internal class EmailsParser {
 
-    fun parse(json: String): List<Email>? {
+    fun parseList(json: String): List<Email>? {
         val root = JSONParser().parse(json) as? JSONArray
 
         return root?.mapNotNull { emailObject ->
             val jsonEmail = emailObject as? JSONObject
             return@mapNotNull parseEmail(jsonEmail)
         }
+    }
+
+    fun parseEmail(json: String): Email? {
+        return parseList(json)?.firstOrNull()
     }
 
     private fun parseEmail(jsonEmail: JSONObject?): Email? {

@@ -2,7 +2,6 @@ package io.ybiletskyi.fec.details
 
 import android.os.Bundle
 import android.view.Menu
-import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
@@ -11,6 +10,7 @@ import io.ybiletskyi.fec.R
 import io.ybiletskyi.fec.common.ScreenSettings
 import io.ybiletskyi.fec.common.fragment.BaseFragment
 import io.ybiletskyi.fec.viewmodels.EmailDetailViewModel
+import io.ybiletskyi.fec.viewmodels.EmailDetailViewModelFactory
 
 class DetailsFragment : BaseFragment() {
 
@@ -27,6 +27,11 @@ class DetailsFragment : BaseFragment() {
     }
 
     private lateinit var emailDetailViewModel: EmailDetailViewModel
+    private val menuButtons = mutableListOf<MenuButtons>()
+
+    private lateinit var emailContentView: View
+    private lateinit var progressView: View
+    private lateinit var errorTextView: TextView
 
     private lateinit var senderTextView: TextView
     private lateinit var dateTextView: TextView
@@ -40,6 +45,11 @@ class DetailsFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        emailContentView = view.findViewById(R.id.email_content)
+        progressView = view.findViewById(R.id.progress)
+        errorTextView = view.findViewById(R.id.error)
+
         senderTextView = view.findViewById(R.id.sender)
         dateTextView = view.findViewById(R.id.date)
         subjectTextView = view.findViewById(R.id.subject)
@@ -48,34 +58,32 @@ class DetailsFragment : BaseFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        emailDetailViewModel = ViewModelProvider(this).get(EmailDetailViewModel::class.java)
-        emailDetailViewModel.emailData.observe(viewLifecycleOwner, { emaildData ->
-            senderTextView.text = String.format(getString(R.string.str_from), emaildData.sender)
-            dateTextView.text = emaildData.date
-            subjectTextView.text = String.format(getString(R.string.str_subject), emaildData.subject)
-            descriptionTextView.text = emaildData.description
-        })
 
         val emailId = requireArguments().getInt(EMAIL_ID)
-        emailDetailViewModel.loadEmailDetail(emailId)
+        emailDetailViewModel = ViewModelProvider(this, EmailDetailViewModelFactory(emailId)).get(EmailDetailViewModel::class.java)
+        emailDetailViewModel.emailData.observe(viewLifecycleOwner, { emailData ->
+            when (emailData) {
+                is DetailData.Loading -> handleLoading()
+                is DetailData.InfoMessage -> handleError(emailData)
+                is DetailData.EmailDetail -> handleData(emailData)
+            }
+        })
     }
 
     override fun getLayoutId(): Int = R.layout.fragment_details
 
     override fun getScreenSettings(): ScreenSettings = ScreenSettings.Details
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        emailDetailViewModel.emailData.value?.let {
-            val buttons = MenuButtons.buildMenu(it.isDeleted, it.isViewed)
-            buttons.forEach { menuItem ->
-                menu.add(Menu.NONE, menuItem.ordinal, Menu.NONE, menuItem.titleRes).apply {
-                    setIcon(menuItem.icRes)
-                    setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
-                }
+    override fun onPrepareOptionsMenu(menu: Menu) {
+        super.onPrepareOptionsMenu(menu)
+        menu.clear()
+
+        menuButtons.forEach { menuItem ->
+            menu.add(Menu.NONE, menuItem.ordinal, Menu.NONE, menuItem.titleRes).apply {
+                setIcon(menuItem.icRes)
+                setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
             }
         }
-
-        super.onCreateOptionsMenu(menu, inflater)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -94,5 +102,37 @@ class DetailsFragment : BaseFragment() {
             }
             else -> false
         }
+    }
+
+    private fun handleLoading() {
+        emailContentView.visibility = View.GONE
+        errorTextView.visibility = View.GONE
+        progressView.visibility = View.VISIBLE
+    }
+
+    private fun handleError(error: DetailData.InfoMessage) {
+        emailContentView.visibility = View.GONE
+        progressView.visibility = View.GONE
+        errorTextView.visibility = View.VISIBLE
+
+        // show error message
+        errorTextView.text = error.message
+    }
+
+    private fun handleData(emailData: DetailData.EmailDetail) {
+        errorTextView.visibility = View.GONE
+        progressView.visibility = View.GONE
+        emailContentView.visibility = View.VISIBLE
+
+        // update email content
+        senderTextView.text = String.format(getString(R.string.str_from), emailData.sender)
+        dateTextView.text = emailData.date
+        subjectTextView.text = String.format(getString(R.string.str_subject), emailData.subject)
+        descriptionTextView.text = emailData.description
+
+        // update menu
+        menuButtons.clear()
+        menuButtons.addAll(MenuButtons.buildMenu(emailData.isDeleted, emailData.isViewed))
+        getMainActivity().invalidateOptionsMenu()
     }
 }

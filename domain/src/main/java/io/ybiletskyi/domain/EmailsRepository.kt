@@ -12,13 +12,31 @@ class EmailsRepository(
 ) : DataStore {
 
     companion object {
-        private const val DELAY_TIME = 2000L
+        private const val DELAY_TIME = 1000L
 
         fun newInstance(context: Context): EmailsRepository {
             return EmailsRepository(
                 HttpDataStore.newInstance(),
                 DbStore.newInstance(context)
             )
+        }
+    }
+
+    override suspend fun email(id: Int): Result<Email> {
+        // simulate delay
+        delay(DELAY_TIME)
+        // as remote data store doesn't support modifications, local changes have higher priority than remote.
+        // so repository firstly load data from local storage. if data is not exist in the local store try to load from remote store
+        val localResult = localDataStore.email(id)
+        val isLocalCallSuccess = (localResult as? Result.Success)?.data == null
+        return when (isLocalCallSuccess) {
+            true -> localResult
+            false -> remoteDataStore.email(id).apply {
+                // if remote store returned data -- save it to local storage
+                (this as? Result.Success)?.data?.let { newEmail ->
+                    localDataStore.saveEmails(listOf(newEmail))
+                }
+            }
         }
     }
 

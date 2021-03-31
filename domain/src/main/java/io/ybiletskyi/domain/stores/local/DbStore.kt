@@ -22,6 +22,17 @@ internal class DbStore(
         }
     }
 
+    override suspend fun email(id: Int): Result<Email> {
+        return try {
+            val dao = dbStore.emailsDao()
+            val emails = dao.email(id)
+            Result.Success(emails)
+
+        } catch (e: Throwable) {
+            Result.Error(e.message)
+        }
+    }
+
     override suspend fun emails(page: Int, limit: Int, isDeleted: Boolean): Result<List<Email>> {
         return try {
             val dao = dbStore.emailsDao()

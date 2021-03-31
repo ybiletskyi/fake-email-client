@@ -16,16 +16,34 @@ internal class HttpDataStore(
         }
     }
 
+    override suspend fun email(id: Int): Result<Email> {
+        val url = UrlResolver(Url.EmailsUrl)
+                .param(UrlArg.Id, id)
+                .build()
+
+        return when(val status = httpClient.get(url)) {
+            is HttpStatus.Error -> Result.Error(status.error)
+            is HttpStatus.Success -> {
+                val list = parser.parseEmail(status.json)
+                return when {
+                    list != null -> Result.Success(list)
+                    else -> Result.Error("Bad json")
+                }
+            }
+        }
+    }
+
     override suspend fun emails(page: Int, limit: Int, isDeleted: Boolean): Result<List<Email>> {
         val url = UrlResolver(Url.EmailsUrl)
             .param(UrlArg.Page, page)
             .param(UrlArg.Limit, limit)
+            .param(UrlArg.Deleted, isDeleted)
             .build()
 
         return when(val status = httpClient.get(url)) {
             is HttpStatus.Error -> Result.Error(status.error)
             is HttpStatus.Success -> {
-                val list = parser.parse(status.json)
+                val list = parser.parseList(status.json)
                 return when {
                     list != null -> Result.Success(list)
                     else -> Result.Error("Bad json")

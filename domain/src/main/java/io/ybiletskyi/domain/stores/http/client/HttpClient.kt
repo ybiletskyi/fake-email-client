@@ -1,5 +1,6 @@
 package io.ybiletskyi.domain.stores.http.client
 
+import android.util.Log
 import io.ybiletskyi.domain.stores.http.await
 import okhttp3.*
 import java.io.IOException
@@ -15,6 +16,8 @@ internal object HttpClient {
     }
 
     suspend fun get(url: String): HttpStatus {
+        Log.d("HttpClient", "request to: $url")
+
         val request = Request.Builder()
             .url(url)
             .get()

@@ -11,7 +11,9 @@ internal enum class Url(val path: String) {
 
 internal enum class UrlArg(val arg: String) {
     Page("_start"),
-    Limit("_limit")
+    Limit("_limit"),
+    Deleted("isDeleted"),
+    Id("id")
 }
 
 internal class UrlResolver(
