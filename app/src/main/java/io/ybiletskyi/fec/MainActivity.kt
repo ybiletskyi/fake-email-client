@@ -3,6 +3,7 @@ package io.ybiletskyi.fec
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import io.ybiletskyi.fec.common.ScreenSettings
 import io.ybiletskyi.fec.drawer.DrawerHelper
 import io.ybiletskyi.fec.utils.ToolbarHelper
@@ -11,6 +12,7 @@ import io.ybiletskyi.fec.viewmodels.FiltersViewModel
 class MainActivity : AppCompatActivity() {
 
     private lateinit var viewModel: FiltersViewModel
+    private lateinit var newEmailButton: FloatingActionButton
     val appRouter = AppRouter(this)
 
     private val toolbarHelper by lazy {
@@ -31,6 +33,11 @@ class MainActivity : AppCompatActivity() {
         // open main fragment, if activity is not recreated
         if (savedInstanceState == null) {
             appRouter.openMainScreen()
+        }
+        // emulate new email receiving
+        newEmailButton = findViewById(R.id.emulate_email)
+        newEmailButton.setOnClickListener {
+            viewModel.emulateNewEmail()
         }
     }
 
