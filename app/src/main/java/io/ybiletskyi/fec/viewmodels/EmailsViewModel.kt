@@ -13,14 +13,14 @@ import io.ybiletskyi.fec.main.ShortData
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.util.*
 
-class EmailsViewModel : ViewModel() {
+class EmailsViewModel : ViewModel(), Interactor.UpdatesObserver {
 
     private val _emailsList: MutableLiveData<Collection<ShortData>> = MutableLiveData()
     val emailList: LiveData<Collection<ShortData>> = _emailsList
 
     // loaded data
-    private val cachedEmailsData = linkedMapOf<Int, Email>()
     private val cachedMappedEmails = linkedMapOf<Int, ShortData.EmailShortData>()
     private val mapper = EmailsMapper()
 
@@ -34,6 +34,9 @@ class EmailsViewModel : ViewModel() {
         get() = page == -1
 
     init {
+        // subscribe for observe changes
+        Interactor.addObserver(this)
+        // load first page of data
         loadNextEmailsPage()
     }
 
@@ -86,7 +89,6 @@ class EmailsViewModel : ViewModel() {
         this.isDeleted = isDeleted
         this.page = 0
         // invalidate cache
-        cachedEmailsData.clear()
         cachedMappedEmails.clear()
         // load new data set
         loadNextEmailsPage()
@@ -95,7 +97,7 @@ class EmailsViewModel : ViewModel() {
     fun changeEmail(id: Int, isDeleted: Boolean? = null, isRead: Boolean? = null) {
         viewModelScope.launch {
             val result: Collection<ShortData> = withContext(Dispatchers.IO) {
-                val cachedData = cachedEmailsData[id]!!
+                val cachedData = (Interactor.email(id) as Result.Success).data
                 val updatedEmail = when {
                     isDeleted != null -> cachedData.copy(isDeleted = isDeleted)
                     isRead != null -> cachedData.copy(isRead = isRead)
@@ -118,10 +120,35 @@ class EmailsViewModel : ViewModel() {
         }
     }
 
-    private fun updateCache(email: Email): ShortData.EmailShortData {
-        val shortData = mapper.mapData(email)
-        cachedEmailsData[email.id] = email
-        cachedMappedEmails[email.id] = shortData
-        return shortData
+    override fun onDataAdded(data: Collection<Email>) {
+        val newData = linkedMapOf<Int, ShortData.EmailShortData>()
+        newData.putAll(data.map { email -> email.id to mapper.mapData(email) })
+        newData.putAll(cachedMappedEmails)
+
+        cachedMappedEmails.clear()
+        cachedMappedEmails.putAll(newData)
+
+        _emailsList.value = cachedMappedEmails.values
+    }
+
+    override fun onDataUpdated(data: Collection<Email>) {
+        data.forEach(this::updateCache)
+    }
+
+    override fun onCleared() {
+        Interactor.removeObserver(this)
+        super.onCleared()
+    }
+
+    private fun updateCache(email: Email): ShortData.EmailShortData? {
+        val needToDeleteFromCache = email.isDeleted != isDeleted
+        return if (needToDeleteFromCache) {
+            cachedMappedEmails.remove(email.id)
+            null
+        } else {
+            val shortData = mapper.mapData(email)
+            cachedMappedEmails[email.id] = shortData
+            shortData
+        }
     }
 }
