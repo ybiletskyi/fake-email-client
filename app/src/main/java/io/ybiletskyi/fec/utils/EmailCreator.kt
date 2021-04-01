@@ -12,9 +12,13 @@ import androidx.core.app.NotificationCompat
 import io.ybiletskyi.domain.Email
 import io.ybiletskyi.fec.App
 import io.ybiletskyi.fec.MainActivity
-import java.util.concurrent.ThreadLocalRandom
+import kotlin.random.Random
 
 class EmailCreator(private val context: Context) {
+
+    companion object {
+        const val EMAIL_ID = "email_id"
+    }
 
     /**
      * for display
@@ -30,7 +34,7 @@ class EmailCreator(private val context: Context) {
      */
     private val min = 100 // local generated id will be start from this value
     private val max = 1000 + 1
-    private val random = ThreadLocalRandom.current()
+    private val random = Random.Default
 
     fun generateRandomEmail(): Email {
         val randomId = random.nextInt(min, max)
@@ -56,9 +60,11 @@ class EmailCreator(private val context: Context) {
     }
 
     private fun createNotification(notifyId: Int, title: String, body: String) {
+        val requestID = System.currentTimeMillis().toInt()
         val intent = Intent(context, MainActivity::class.java)
+        intent.putExtra(EMAIL_ID, notifyId)
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
-        val pendingIntent = PendingIntent.getActivity(App.context, 0, intent, 0)
+        val pendingIntent = PendingIntent.getActivity(App.context, requestID, intent, PendingIntent.FLAG_UPDATE_CURRENT)
 
         val builder = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             var mChannel = manager.getNotificationChannel(id)

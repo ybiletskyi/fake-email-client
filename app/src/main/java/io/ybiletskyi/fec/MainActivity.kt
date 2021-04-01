@@ -1,11 +1,13 @@
 package io.ybiletskyi.fec
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import io.ybiletskyi.fec.common.ScreenSettings
 import io.ybiletskyi.fec.drawer.DrawerHelper
+import io.ybiletskyi.fec.utils.EmailCreator
 import io.ybiletskyi.fec.utils.ToolbarHelper
 import io.ybiletskyi.fec.viewmodels.FiltersViewModel
 
@@ -38,6 +40,16 @@ class MainActivity : AppCompatActivity() {
         newEmailButton = findViewById(R.id.emulate_email)
         newEmailButton.setOnClickListener {
             viewModel.emulateNewEmail()
+        }
+        // handle intent
+        onNewIntent(intent)
+    }
+
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        val extras = intent?.extras
+        if (extras != null && extras.containsKey(EmailCreator.EMAIL_ID)) {
+            appRouter.openDetails(extras.getInt(EmailCreator.EMAIL_ID))
         }
     }
 
