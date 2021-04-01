@@ -7,7 +7,7 @@
       "subject": "New PR",
       "text": "Please review new PR in the repo",
       "isDeleted": false,
-      "isViewed": false
+      "isRead": false
     },
     {
       "id": 24,
@@ -16,7 +16,7 @@
       "subject": "Visit to Canada",
       "text": "Hi! When will you visit canada?",
       "isDeleted": false,
-      "isViewed": true
+      "isRead": true
     },
     {
       "id": 23,
@@ -25,7 +25,7 @@
       "subject": "Action for PR #55",
       "text": "Action for PR #55 is successful.",
       "isDeleted": false,
-      "isViewed": false
+      "isRead": false
     },
     {
       "id": 22,
@@ -34,7 +34,7 @@
       "subject": "Action for PR #53",
       "text": "Action for PR #53 is failed.",
       "isDeleted": false,
-      "isViewed": false
+      "isRead": false
     },
     {
       "id": 21,
@@ -43,7 +43,7 @@
       "subject": "Action for PR #50",
       "text": "Action for PR #50 is successful.",
       "isDeleted": false,
-      "isViewed": false
+      "isRead": false
     },
     {
       "id": 20,
@@ -52,7 +52,7 @@
       "subject": "Issue closed",
       "text": "Please review status of issue in the repo",
       "isDeleted": false,
-      "isViewed": true
+      "isRead": true
     },
     {
       "id": 19,
@@ -61,7 +61,7 @@
       "subject": "Issue closed",
       "text": "Please review status of issue in the repo",
       "isDeleted": false,
-      "isViewed": true
+      "isRead": true
     },
     {
       "id": 18,
@@ -70,7 +70,7 @@
       "subject": "New issue created",
       "text": "Please review new issue in the repo",
       "isDeleted": false,
-      "isViewed": true
+      "isRead": true
     },
     {
       "id": 17,
@@ -79,7 +79,7 @@
       "subject": "New PR",
       "text": "Please review new PR in the repo",
       "isDeleted": false,
-      "isViewed": true
+      "isRead": true
     },
     {
       "id": 16,
@@ -88,7 +88,7 @@
       "subject": "Online shopping",
       "text": "We start the online shopping in our mall.",
       "isDeleted": true,
-      "isViewed": false
+      "isRead": false
     },
     {
       "id": 15,
@@ -97,7 +97,7 @@
       "subject": "Online Meeting",
       "text": "We will have a meeting at the 5 pm.",
       "isDeleted": false,
-      "isViewed": true
+      "isRead": true
     },
     {
       "id": 14,
@@ -106,7 +106,7 @@
       "subject": "Meeting",
       "text": "We need to plan a new online meeting.",
       "isDeleted": false,
-      "isViewed": true
+      "isRead": true
     },
     {
       "id": 13,
@@ -115,7 +115,7 @@
       "subject": "New shop in your city",
       "text": "It's new amazing toy shop!!!!",
       "isDeleted": false,
-      "isViewed": false
+      "isRead": false
     },
     {
       "id": 12,
@@ -124,7 +124,7 @@
       "subject": "New shop in your city",
       "text": "It's sport shop with amazing equipment.",
       "isDeleted": false,
-      "isViewed": false
+      "isRead": false
     },
     {
       "id": 11,
@@ -133,7 +133,7 @@
       "subject": "New chicken burger",
       "text": "Hello! What is your dream?",
       "isDeleted": false,
-      "isViewed": true
+      "isRead": true
     },
     {
       "id": 10,
@@ -142,7 +142,7 @@
       "subject": "New chicken burger",
       "text": "Hello! Do you want to try new Burger?",
       "isDeleted": false,
-      "isViewed": true
+      "isRead": true
     },
     {
       "id": 9,
@@ -151,7 +151,7 @@
       "subject": "Fight with dog",
       "text": "The dog is very strong!",
       "isDeleted": true,
-      "isViewed": true
+      "isRead": true
     },
     {
       "id": 8,
@@ -160,7 +160,7 @@
       "subject": "Fight with dog",
       "text": "Help me!",
       "isDeleted": false,
-      "isViewed": true
+      "isRead": true
     },
     {
       "id": 7,
@@ -169,7 +169,7 @@
       "subject": "Fight with cat",
       "text": "Do you want to save your time?",
       "isDeleted": false,
-      "isViewed": true
+      "isRead": true
     },
     {
       "id": 6,
@@ -178,7 +178,7 @@
       "subject": "New house",
       "text": "Where my new house?",
       "isDeleted": false,
-      "isViewed": true
+      "isRead": true
     },
     {
       "id": 5,
@@ -187,7 +187,7 @@
       "subject": "Meeting",
       "text": "Hi! Where are you?",
       "isDeleted": false,
-      "isViewed": true
+      "isRead": true
     },
     {
       "id": 4,
@@ -196,7 +196,7 @@
       "subject": "Hello my bro",
       "text": "Hi! How are you?",
       "isDeleted": false,
-      "isViewed": true
+      "isRead": true
     },
     {
       "id": 3,
@@ -205,7 +205,7 @@
       "subject": "Design was updated",
       "text": "Review work from designer",
       "isDeleted": false,
-      "isViewed": true
+      "isRead": true
     },
     {
       "id": 2,
@@ -214,7 +214,7 @@
       "subject": "Hello bro",
       "text": "Hi! How are you?",
       "isDeleted": false,
-      "isViewed": true
+      "isRead": true
     },
     {
       "id": 1,
@@ -223,7 +223,7 @@
       "subject": "New PR",
       "text": "Please review new PR in the repo.",
       "isDeleted": false,
-      "isViewed": true
+      "isRead": true
     },
     {
       "id": 0,
@@ -232,7 +232,7 @@
       "subject": "New letter",
       "text": "Test Letter for future work.",
       "isDeleted": false,
-      "isViewed": true
+      "isRead": true
     }
   ]
 }

@@ -34,7 +34,7 @@ class EmailEditBottomSheet : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val email = requireArguments().getParcelable(EMAIL) as? ShortData.EmailShortData
-        val dataSet = email?.let { MenuButtons.buildMenu(it.isDeleted, it.isActive) } ?: emptyArray()
+        val dataSet = email?.let { MenuButtons.buildMenu(it.isDeleted, it.isRead) } ?: emptyArray()
 
         val recyclerView = view.findViewById<RecyclerView>(R.id.menu_list)
         recyclerView.layoutManager = LinearLayoutManager(requireContext())

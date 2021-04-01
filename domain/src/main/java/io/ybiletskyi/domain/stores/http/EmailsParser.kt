@@ -28,7 +28,7 @@ internal class EmailsParser {
                 from = asString("from", ""),
                 subject = asString("subject", ""),
                 text = asString("text", ""),
-                isViewed = asBoolean("isViewed", false),
+                isRead = asBoolean("isRead", false),
                 isDeleted = asBoolean("isDeleted", false)
             )
         }

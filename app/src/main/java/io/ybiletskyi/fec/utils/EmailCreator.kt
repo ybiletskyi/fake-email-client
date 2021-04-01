@@ -42,7 +42,7 @@ class EmailCreator(private val context: Context) {
             from = "GitHub Fork #$randomId",
             subject = "New PR #$randomId was raised by user$randomId",
             text = emailText,
-            isViewed = false,
+            isRead = false,
             isDeleted = false
         )
     }

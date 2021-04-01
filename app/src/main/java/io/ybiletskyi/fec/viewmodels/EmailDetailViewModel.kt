@@ -43,34 +43,17 @@ class EmailDetailViewModel(val id: Int) : ViewModel() {
         }
     }
 
-    fun changeFolder(isDeleted: Boolean) {
+    fun changeEmail(isDeleted: Boolean? = null, isRead: Boolean? = null) {
         viewModelScope.launch {
             val result: DetailData = withContext(Dispatchers.IO) {
-                val updatedEmail = cachedData.copy(isDeleted = isDeleted)
-                val updates = listOf(updatedEmail)
-
-                return@withContext when (val result = Interactor.updateEmails(updates)) {
-                    // show error
-                    is Result.Error -> DetailData.InfoMessage(result.message ?: "Unknown error")
-                    // save to memory cache and map to UI data
-                    is Result.Success -> {
-                        cachedData = updatedEmail
-                        mapper.mapData(updatedEmail)
-                    }
+                val updatedEmail = when {
+                    isDeleted != null -> cachedData.copy(isDeleted = isDeleted)
+                    isRead != null -> cachedData.copy(isRead = isRead)
+                    // if nothing modified return cached data
+                    else -> return@withContext mapper.mapData(cachedData)
                 }
-            }
 
-            _emailData.value = result
-        }
-    }
-
-    fun changeState(isRead: Boolean) {
-        viewModelScope.launch {
-            val result: DetailData = withContext(Dispatchers.IO) {
-                val updatedEmail = cachedData.copy(isViewed = !isRead)
-                val updates = listOf(updatedEmail)
-
-                return@withContext when (val result = Interactor.updateEmails(updates)) {
+                return@withContext when (val result = Interactor.updateEmails(listOf(updatedEmail))) {
                     // show error
                     is Result.Error -> DetailData.InfoMessage(result.message ?: "Unknown error")
                     // save to memory cache and map to UI data

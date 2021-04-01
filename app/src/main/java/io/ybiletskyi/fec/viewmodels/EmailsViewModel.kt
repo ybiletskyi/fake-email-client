@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import io.ybiletskyi.domain.Email
 import io.ybiletskyi.domain.Result
 import io.ybiletskyi.fec.Interactor
 import io.ybiletskyi.fec.main.EmailsMapper
@@ -15,11 +16,12 @@ import kotlinx.coroutines.withContext
 
 class EmailsViewModel : ViewModel() {
 
-    private val _emailsList: MutableLiveData<List<ShortData>> = MutableLiveData()
-    val emailList: LiveData<List<ShortData>> = _emailsList
+    private val _emailsList: MutableLiveData<Collection<ShortData>> = MutableLiveData()
+    val emailList: LiveData<Collection<ShortData>> = _emailsList
 
     // loaded data
-    private val cachedEmails = mutableListOf<ShortData.EmailShortData>()
+    private val cachedEmailsData = linkedMapOf<Int, Email>()
+    private val cachedMappedEmails = linkedMapOf<Int, ShortData.EmailShortData>()
     private val mapper = EmailsMapper()
 
     // paging params
@@ -44,11 +46,11 @@ class EmailsViewModel : ViewModel() {
             // notify UI that data loading is started
             isLoading = true
             _emailsList.value = mutableListOf<ShortData>().apply {
-                addAll(cachedEmails)
+                addAll(cachedMappedEmails.values)
                 add(ShortData.Loading)
             }
 
-            val result: List<ShortData> = withContext(Dispatchers.IO) {
+            val result: Collection<ShortData> = withContext(Dispatchers.IO) {
                 // load emails from repository
                 return@withContext when (val result = Interactor.emails(page++, pageLimit, isDeleted)) {
                     // if repository returns error show it immediately
@@ -56,13 +58,12 @@ class EmailsViewModel : ViewModel() {
                     // if repository returns next page -- add data to the memory cache
                     // also return cached data
                     is Result.Success -> {
-                        val shortEmails = result.data.map { email -> mapper.mapData(email) }
+                        val shortEmails = result.data.map { email -> updateCache(email)}
                         // view model loaded all emails
                         if (shortEmails.isEmpty())
                             page = -1
 
-                        cachedEmails.addAll(shortEmails)
-                        cachedEmails
+                        cachedMappedEmails.values
                     }
                 }
             }
@@ -85,8 +86,42 @@ class EmailsViewModel : ViewModel() {
         this.isDeleted = isDeleted
         this.page = 0
         // invalidate cache
-        cachedEmails.clear()
+        cachedEmailsData.clear()
+        cachedMappedEmails.clear()
         // load new data set
         loadNextEmailsPage()
+    }
+
+    fun changeEmail(id: Int, isDeleted: Boolean? = null, isRead: Boolean? = null) {
+        viewModelScope.launch {
+            val result: Collection<ShortData> = withContext(Dispatchers.IO) {
+                val cachedData = cachedEmailsData[id]!!
+                val updatedEmail = when {
+                    isDeleted != null -> cachedData.copy(isDeleted = isDeleted)
+                    isRead != null -> cachedData.copy(isRead = isRead)
+                    // if nothing modified return cached data
+                    else -> return@withContext cachedMappedEmails.values
+                }
+
+                return@withContext when (val result = Interactor.updateEmails(listOf(updatedEmail))) {
+                    // show error
+                    is Result.Error -> listOf(ShortData.InfoMessage(result.message ?: "Unknown error"))
+                    // save to memory cache and map to UI data
+                    is Result.Success -> {
+                        updateCache(updatedEmail)
+                        cachedMappedEmails.values
+                    }
+                }
+            }
+
+            _emailsList.value = result
+        }
+    }
+
+    private fun updateCache(email: Email): ShortData.EmailShortData {
+        val shortData = mapper.mapData(email)
+        cachedEmailsData[email.id] = email
+        cachedMappedEmails[email.id] = shortData
+        return shortData
     }
 }

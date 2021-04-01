@@ -10,6 +10,7 @@ import io.ybiletskyi.fec.viewmodels.FiltersViewModel
 import io.ybiletskyi.fec.R
 import io.ybiletskyi.fec.common.ScreenSettings
 import io.ybiletskyi.fec.common.fragment.BaseFragment
+import io.ybiletskyi.fec.details.MenuButtons
 import io.ybiletskyi.fec.drawer.DrawerItem
 import io.ybiletskyi.fec.edit.EmailEditBottomSheet
 import io.ybiletskyi.fec.utils.MyDividerItemDecoration
@@ -76,7 +77,12 @@ class MainFragment : BaseFragment(), EmailsAdapter.OnItemClickListener {
         val sheet = EmailEditBottomSheet.newInstance(data)
         sheet.show(childFragmentManager, "BottomSheet")
         sheet.onItemClickListener = { selectedItem ->
-
+            when (selectedItem) {
+                MenuButtons.DELETE -> emailsViewModel.changeEmail(data.id, isDeleted = true)
+                MenuButtons.RESTORE -> emailsViewModel.changeEmail(data.id, isDeleted = false)
+                MenuButtons.MARK_READ -> emailsViewModel.changeEmail(data.id, isRead = true)
+                MenuButtons.MARK_UNREAD -> emailsViewModel.changeEmail(data.id, isRead = false)
+            }
         }
     }
 

@@ -29,7 +29,7 @@ class EmailsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         }
     }
 
-    fun setDataSet(newDataSet: List<ShortData>) {
+    fun setDataSet(newDataSet: Collection<ShortData>) {
         dataSet.clear()
         dataSet.addAll(newDataSet)
         notifyDataSetChanged()

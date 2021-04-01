@@ -11,6 +11,6 @@ data class Email(
     @ColumnInfo(name = "from") val from: String,
     @ColumnInfo(name = "subject") val subject: String,
     @ColumnInfo(name = "text") val text: String,
-    @ColumnInfo(name = "is_viewed") val isViewed: Boolean,
+    @ColumnInfo(name = "is_read") val isRead: Boolean,
     @ColumnInfo(name = "is_deleted") val isDeleted: Boolean
 )

@@ -17,5 +17,5 @@ sealed class ShortData {
         val description: String,
         val date: String,
         val isDeleted: Boolean,
-        val isActive: Boolean): ShortData(), Parcelable
+        val isRead: Boolean): ShortData(), Parcelable
 }

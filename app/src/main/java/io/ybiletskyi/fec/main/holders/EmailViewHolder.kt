@@ -43,7 +43,7 @@ class EmailViewHolder(view: View) : RecyclerView.ViewHolder(view), ViewHolderIte
         dateView.text = emailShortData.date
         descriptionView.text = emailShortData.description
 
-        if (emailShortData.isActive) {
+        if (!emailShortData.isRead) {
             indicatorView.visibility = View.VISIBLE
         } else {
             indicatorView.visibility = View.INVISIBLE

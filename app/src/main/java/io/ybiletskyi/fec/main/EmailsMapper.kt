@@ -14,7 +14,7 @@ class EmailsMapper {
             description = email.text,
             date = getDate(email.time),
             isDeleted = email.isDeleted,
-            isActive = !email.isViewed
+            isRead = email.isRead
         )
     }
 
