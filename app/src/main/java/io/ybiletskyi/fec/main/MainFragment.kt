@@ -10,6 +10,8 @@ import io.ybiletskyi.fec.viewmodels.FiltersViewModel
 import io.ybiletskyi.fec.R
 import io.ybiletskyi.fec.common.ScreenSettings
 import io.ybiletskyi.fec.common.fragment.BaseFragment
+import io.ybiletskyi.fec.drawer.DrawerItem
+import io.ybiletskyi.fec.edit.EmailEditBottomSheet
 import io.ybiletskyi.fec.utils.MyDividerItemDecoration
 
 class MainFragment : BaseFragment(), EmailsAdapter.OnItemClickListener {
@@ -43,6 +45,8 @@ class MainFragment : BaseFragment(), EmailsAdapter.OnItemClickListener {
         filtersViewModel.emailsFilter.observe(viewLifecycleOwner, { filterItem ->
             // update title with according filter name
             getMainActivity().applyScreenSettings(getScreenSettings())
+            // apply filter to data set
+            emailsViewModel.applyFilter(filterItem == DrawerItem.Trash)
         })
     }
 
@@ -69,7 +73,11 @@ class MainFragment : BaseFragment(), EmailsAdapter.OnItemClickListener {
     }
 
     override fun onItemLongClick(data: ShortData.EmailShortData) {
+        val sheet = EmailEditBottomSheet.newInstance(data)
+        sheet.show(childFragmentManager, "BottomSheet")
+        sheet.onItemClickListener = { selectedItem ->
 
+        }
     }
 
     private val onScrollListener = object : PaginationListener() {

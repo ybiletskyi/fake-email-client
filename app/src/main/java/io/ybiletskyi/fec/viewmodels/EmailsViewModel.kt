@@ -24,6 +24,7 @@ class EmailsViewModel : ViewModel() {
 
     // paging params
     private val pageLimit = PaginationListener.PAGE_LIMIT
+    private var isDeleted = false
     private var page = 0
 
     var isLoading = false
@@ -49,7 +50,7 @@ class EmailsViewModel : ViewModel() {
 
             val result: List<ShortData> = withContext(Dispatchers.IO) {
                 // load emails from repository
-                return@withContext when (val result = Interactor.emails(page++, pageLimit, false)) {
+                return@withContext when (val result = Interactor.emails(page++, pageLimit, isDeleted)) {
                     // if repository returns error show it immediately
                     is Result.Error -> listOf(ShortData.InfoMessage(result.message ?: "Unknown error"))
                     // if repository returns next page -- add data to the memory cache
@@ -75,5 +76,17 @@ class EmailsViewModel : ViewModel() {
             // notify UI that data loading is ended
             isLoading = false
         }
+    }
+
+    fun applyFilter(isDeleted: Boolean) {
+        if (this.isDeleted == isDeleted)
+            return
+        // update query params
+        this.isDeleted = isDeleted
+        this.page = 0
+        // invalidate cache
+        cachedEmails.clear()
+        // load new data set
+        loadNextEmailsPage()
     }
 }

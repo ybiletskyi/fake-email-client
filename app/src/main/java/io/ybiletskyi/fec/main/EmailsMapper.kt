@@ -13,6 +13,7 @@ class EmailsMapper {
             sender = email.from,
             description = email.text,
             date = getDate(email.time),
+            isDeleted = email.isDeleted,
             isActive = !email.isViewed
         )
     }
