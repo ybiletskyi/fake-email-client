@@ -15,7 +15,7 @@ class FiltersViewModel: ViewModel() {
     private val _emailsFilter: MutableLiveData<DrawerItem> = MutableLiveData()
     val emailsFilter: LiveData<DrawerItem> = _emailsFilter
 
-    // should not exist here, as this view model is not corresponding for manipulation with email
+    // TODO: should not exist here, as this view model is not corresponding for manipulation with email
     private val emailCreator = EmailCreator(App.context)
 
     init {
@@ -28,7 +28,7 @@ class FiltersViewModel: ViewModel() {
             _emailsFilter.value = item
     }
 
-    // should not exist here, as this view model is not corresponding for manipulation with email
+    // TODO: should not exist here, as this view model is not corresponding for manipulation with email
     fun emulateNewEmail() {
         viewModelScope.launch {
             val email = emailCreator.generateRandomEmail()

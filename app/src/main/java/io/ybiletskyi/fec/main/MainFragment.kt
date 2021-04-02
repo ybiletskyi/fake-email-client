@@ -14,6 +14,7 @@ import io.ybiletskyi.fec.details.MenuButtons
 import io.ybiletskyi.fec.drawer.DrawerItem
 import io.ybiletskyi.fec.edit.EmailEditBottomSheet
 import io.ybiletskyi.fec.utils.MyDividerItemDecoration
+import io.ybiletskyi.fec.utils.PaginationListener
 
 class MainFragment : BaseFragment(), EmailsAdapter.OnItemClickListener {
 

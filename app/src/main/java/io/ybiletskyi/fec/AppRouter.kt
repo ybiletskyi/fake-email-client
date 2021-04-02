@@ -29,6 +29,7 @@ class AppRouter(private val activity: MainActivity) {
         }
     }
 
+    // TODO: need to add handling of fragment duplication in the backs tack
     private fun navigateTo(fragment: BaseFragment) {
         activity.supportFragmentManager
             .beginTransaction()

@@ -8,7 +8,7 @@ import io.ybiletskyi.domain.Email
 import io.ybiletskyi.domain.Result
 import io.ybiletskyi.fec.Interactor
 import io.ybiletskyi.fec.main.EmailsMapper
-import io.ybiletskyi.fec.main.PaginationListener
+import io.ybiletskyi.fec.utils.PaginationListener
 import io.ybiletskyi.fec.main.ShortData
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

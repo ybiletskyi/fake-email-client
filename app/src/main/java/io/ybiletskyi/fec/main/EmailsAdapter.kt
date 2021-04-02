@@ -32,6 +32,7 @@ class EmailsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     fun setDataSet(newDataSet: Collection<ShortData>) {
         dataSet.clear()
         dataSet.addAll(newDataSet)
+        // TODO: need to use diff util, instead of rebuild all list
         notifyDataSetChanged()
     }
 

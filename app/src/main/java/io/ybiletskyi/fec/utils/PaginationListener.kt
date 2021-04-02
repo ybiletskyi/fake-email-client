@@ -1,4 +1,4 @@
-package io.ybiletskyi.fec.main
+package io.ybiletskyi.fec.utils
 
 import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
